@@ -1,0 +1,8 @@
+requests
+selenium
+bs4
+webdriver_manager
+windows-curses==2.3.0
+Selenium-Screenshot==1.7.0
+packaging
+slack_sdk
