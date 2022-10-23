@@ -28,8 +28,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
 import logging
 from inspect import currentframe, getframeinfo
@@ -40,7 +38,7 @@ from datetime import date
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
-from Misc import getVKCode,getChromeOption,config_init,send_slack
+from Misc import getVKCode,getChromeOption,config_init,send_slack,getMyWebDriver
 import importlib
 
 import LotteCard
@@ -51,9 +49,9 @@ import HanaCard
 logging.basicConfig(level=logging.INFO)
 
 
-s = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=s,options=getChromeOption())
-driver.set_window_position(0,0)
+driver = getMyWebDriver("EDGE")
+
+
 time.sleep(3)
 
 ######################################

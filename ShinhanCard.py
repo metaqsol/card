@@ -116,6 +116,20 @@ class ShinhanCard:
         self.driver.get(self.login_url)
         self.driver.implicitly_wait(TIME_WAIT)
         time.sleep(3)
+        try:
+            self.driver.find_element(By.XPATH,"//label[@for='install02']").click()
+            self.driver.implicitly_wait(TIME_WAIT)
+        except:
+            logging.info("NO ACTIVEX")
+            pass
+
+        # popup_buttons = driver.find_elements(By.XPATH,"//button[@class='btn-close-ban']")
+        # #### Disable Pop Up
+        # for popup in popup_buttons:         
+        #     if(popup.size['width']>0):
+        #         mypopup_button = popup
+        time.sleep(3)
+  
         self.close_alert()
         time.sleep(3)
         self.driver.find_element(By.XPATH,"//button[text() = '다른 방식으로 로그인']").click()
@@ -152,7 +166,10 @@ if __name__ == '__main__':
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
     s = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=s,options=getChromeOption())
+    # driver = webdriver.Chrome(service=s,options=getChromeOption())
+    driver = webdriver.Edge(executable_path = 'C:\\src\\python_card\\msedgedriver.exe')
+
+
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)

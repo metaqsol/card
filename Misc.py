@@ -21,6 +21,8 @@ from configparser import ConfigParser
 import os
 from pathlib import Path
 from slack_sdk import WebClient
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 def getVKCode(letter):
     ll=list()
@@ -66,6 +68,20 @@ def getVKCode_Hana(letter):
 
 if __name__ == '__main__':
     getVKCode('asdf')
+
+
+def getMyWebDriver(TYPE):
+    driver=None
+    if TYPE=="CHROME":
+        s = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=s,options=getChromeOption())
+        driver.set_window_position(0,0)
+        driver.set_window_size(820,11180)
+    elif TYPE=="EDGE":
+        driver = webdriver.Edge(executable_path = os.path.join(Path(__file__).parent, "msedgedriver.exe"))
+    else:
+        raise Exception("Not Support")
+    return driver
 
 
 def getChromeOption():
@@ -125,13 +141,11 @@ def getChromeOption():
     chrome_options.add_argument("--incognito")
     chrome_options.add_experimental_option("detach", True)
     chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
-    chrome_options.add_argument('headless')
+    # chrome_options.add_argument('headless')
 
     return chrome_options
 
 def config_init():
-    print(__file__)
-    cwd = os.getcwd()
     CONFIGFILE =  os.path.join(Path(__file__).parent, "config.ini") 
     parser = ConfigParser()
     try:
