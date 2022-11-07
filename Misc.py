@@ -141,7 +141,7 @@ def getChromeOption():
     chrome_options.add_argument("--incognito")
     chrome_options.add_experimental_option("detach", True)
     chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
-    # chrome_options.add_argument('headless')
+    chrome_options.add_argument('headless')
 
     return chrome_options
 
