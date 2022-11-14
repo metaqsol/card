@@ -45,13 +45,32 @@ def getVKCode(letter):
         ll.append(letter)
     return ll
 
+def getVKCode_KB(letter):
+    ll=list()
+    if letter.isalpha():
+        if letter.isupper():
+            ll.append('쉬프트')
+            ll.append(f"대문자{letter}")
+            ll.append('쉬프트')
+        else:
+            ll.append(f"{letter}")
+    elif letter=='@':
+        ll.append('특수키')
+        ll.append('골뱅이')
+        ll.append('특수키')
+    else:
+        ll.append(letter)
+    return ll
+
+
+
+
 def getVKCode_Hana(letter):
     ll=list()
     if letter.isalpha():
         if letter.isupper():
             ll.append('대문자변환')
             ll.append(f"대문자{letter}")
-            # ll.append('소문자변환')
         else:
             ll.append(f"소문자{letter}")
     elif letter=='@':
