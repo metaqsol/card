@@ -20,7 +20,6 @@ from curses.ascii import isdigit
 from select import select
 from turtle import Screen, isvisible
 from configparser import ConfigParser
-from selenium import webdriver
 from bs4 import BeautifulSoup
 import time
 from datetime import datetime
