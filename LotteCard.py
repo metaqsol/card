@@ -24,7 +24,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from Screenshot import Screenshot_Clipping
 from PIL import Image
 import os
-from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana
+from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana,getMyWebDriver
 import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -98,7 +98,7 @@ class LotteCard:
         self.driver.find_element(By.ID,"mbrCtfEncV").click()
         for l in self.password:
             ll = getVKCode(l)
-            for lll in ll:
+            for _,lll in ll:
                 self.driver.find_element(By.XPATH,f"//img[@class='kpd-data' and @aria-label='{lll}']").click()
                 time.sleep(0.5)        
         for elem in self.driver.find_elements(By.XPATH,f"//img[@class='kpd-data' and @aria-label='입력완료']"):
@@ -115,8 +115,7 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    s = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=s,options=getChromeOption())
+    driver = getMyWebDriver("CHROME",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)

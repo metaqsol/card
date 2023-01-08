@@ -24,7 +24,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from Screenshot import Screenshot_Clipping
 from PIL import Image
 import os
-from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana,getVKCode_KB
+from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana,getVKCode_KB,getMyWebDriver
 import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -80,6 +80,7 @@ class KookminCard:
         driver.implicitly_wait(self.TIME_WAIT)
         driver.find_element(By.ID,"userId").send_keys(self.username)
         self.driver.find_element(By.ID,"userPwd").click()
+        time.sleep(4)
         for l in self.password:
             ll = getVKCode_KB(l)
             for lll in ll:
@@ -99,8 +100,7 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    s = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=s,options=getChromeOption())
+    driver = getMyWebDriver("CHROME",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)

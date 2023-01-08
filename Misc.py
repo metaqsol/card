@@ -28,21 +28,21 @@ def getVKCode(letter):
     ll=list()
     if letter.isalpha():
         if letter.isupper():
-            ll.append('쉬프트')
-            ll.append(f"대문자 {letter}")
-            ll.append('쉬프트')
+            ll.append(['kpd-group lower','쉬프트'])
+            ll.append(['kpd-group upper',f"대문자 {letter}"])
+            ll.append(['kpd-group upper','쉬프트'])
         else:
-            ll.append(f"소문자 {letter}")
+            ll.append(['kpd-group lower',f"소문자 {letter}"])
     elif letter=='@':
-        ll.append('특수문자')
-        ll.append('골뱅이')
-        ll.append('소문자')
+        ll.append(['kpd-group lower','특수문자'])
+        ll.append(['kpd-group special','골뱅이'])
+        ll.append(['kpd-group special','소문자'])
     elif letter=='!':
-        ll.append('특수문자')
-        ll.append('느낌표')
-        ll.append('소문자')
+        ll.append(['kpd-group lower','특수문자'])
+        ll.append(['kpd-group special','느낌표'])
+        ll.append(['kpd-group special','소문자'])
     else:
-        ll.append(letter)
+        ll.append(['kpd-group lower',letter])
     return ll
 
 def getVKCode_KB(letter):
@@ -89,11 +89,11 @@ if __name__ == '__main__':
     getVKCode('asdf')
 
 
-def getMyWebDriver(TYPE):
+def getMyWebDriver(TYPE,isHeadless=True):
     driver=None
     if TYPE=="CHROME":
         s = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=s,options=getChromeOption())
+        driver = webdriver.Chrome(service=s,options=getChromeOption(isHeadless))
         driver.set_window_position(0,0)
         driver.set_window_size(820,11180)
     elif TYPE=="EDGE":
@@ -103,7 +103,7 @@ def getMyWebDriver(TYPE):
     return driver
 
 
-def getChromeOption():
+def getChromeOption(isHeadless):
     mobile_emulation = { 
         #"deviceName": "Apple iPhone 3GS"
         #"deviceName": "Apple iPhone 4"
@@ -160,8 +160,8 @@ def getChromeOption():
     chrome_options.add_argument("--incognito")
     chrome_options.add_experimental_option("detach", True)
     chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
-    chrome_options.add_argument('headless')
-
+    if isHeadless==True:
+        chrome_options.add_argument('headless')
     return chrome_options
 
 def config_init():
