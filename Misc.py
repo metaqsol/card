@@ -21,14 +21,14 @@ from configparser import ConfigParser
 import os
 from pathlib import Path
 from slack_sdk import WebClient
-from selenium.webdriver.chrome.service import Service
 
-
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.edge.service import Service as EdgeService
 
+from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
+
+
 
 
 def getVKCode(letter):
@@ -96,10 +96,10 @@ if __name__ == '__main__':
     getVKCode('asdf')
 
 
+
 def getMyWebDriver(TYPE,isHeadless=True):
     driver=None
     if TYPE=="CHROME":
-        s = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=getChromeOption(isHeadless))
         driver.set_window_position(0,0)
         driver.set_window_size(820,11180)
