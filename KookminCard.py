@@ -38,7 +38,7 @@ import importlib
 import uuid
 
 class KookminCard:
-    login_url:str =  "https://m.kbcard.com/CMN/DVIEW/MOBMCXHIAMBC0001"
+    login_url:str =  "https://m.kbcard.com/CMN/DVIEW/MOBMCXHIAMBC0001#loginType1"
     benefit_url:str = "https://m.kbcard.com/MKB/DVIEW/MMBMCXHIABNSD0006"
     driver:webdriver  = None
     mydata:list = None
@@ -76,10 +76,20 @@ class KookminCard:
             self.close_alert()
         except:
             pass
-        driver.find_element(By.XPATH,"//a[text()='아이디']").click()
+
+        #다른 로그인 방법 선택
+        driver.find_element(By.XPATH,"//a[contains(@href,'#loginTypePop')]").click()
+        driver.implicitly_wait(self.TIME_WAIT)
+        time.sleep(4)
+        #아이디 선택
+        driver.find_element(By.XPATH,"//*[@id='loginTypePop']/div[2]/ul/li[2]/a").click()
+        driver.implicitly_wait(self.TIME_WAIT)
+        time.sleep(4)
+
+        self.driver.find_element(By.ID,"userId").click()
         driver.implicitly_wait(self.TIME_WAIT)
         driver.find_element(By.ID,"userId").send_keys(self.username)
-        self.driver.find_element(By.ID,"userPwd").click()
+        driver.find_element(By.ID,"userPwd").click()
         time.sleep(4)
         for l in self.password:
             ll = getVKCode_KB(l)
@@ -100,7 +110,7 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    driver = getMyWebDriver("CHROME",isHeadless=False)
+    driver = getMyWebDriver("EDGE",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)
