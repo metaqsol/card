@@ -58,10 +58,24 @@ class KookminCard:
     def benefit(self):
         self.driver.get(self.benefit_url)
         self.mydata=list()
-        ss =  Screenshot_Clipping.Screenshot()
-        self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
-        time.sleep(1)
-        return self.mydata
+
+        elememts = self.driver.find_elements(By.XPATH,"//*[@id='slideCardList']/div/span[contains(@class,'swiper-pagination-bullet')]")
+        time.sleep(2)
+        for ele in elememts:
+            try:
+                ele.click()
+            except:
+                pass
+            time.sleep(5)
+            ss =  Screenshot_Clipping.Screenshot()
+            self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
+            time.sleep(5)
+            self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
+            time.sleep(1)
+        return self.mydata 
+    
+
+
 
     def clear(self):
         for file in self.mydata:
