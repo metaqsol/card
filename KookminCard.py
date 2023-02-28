@@ -61,18 +61,26 @@ class KookminCard:
 
         elememts = self.driver.find_elements(By.XPATH,"//*[@id='slideCardList']/div/span[contains(@class,'swiper-pagination-bullet')]")
         time.sleep(2)
+        summary = self.__class__.__name__+"\n"
         for ele in elememts:
             try:
                 ele.click()
             except:
                 pass
             time.sleep(5)
+
+           
+            title = self.driver.find_element(By.XPATH,'//*[@id="choiceCardName"]').get_attribute('value')
+            total = self.driver.find_element(By.XPATH,'//*[@id="content"]/section/div/div[3]/div[3]/div/a/strong').text
             ss =  Screenshot_Clipping.Screenshot()
             self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
             time.sleep(5)
             self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
             time.sleep(1)
-        return self.mydata 
+  
+            # print(title, total)
+            summary+=f"{title}:{total}\n"
+        return self.mydata,summary
     
 
 
@@ -131,3 +139,4 @@ if __name__ == '__main__':
     card = MyClass(driver,str(myconf[myname]["ID"]).strip(),str(myconf[myname]["PW"]).strip())
     card.login()
     print(card.benefit())
+    

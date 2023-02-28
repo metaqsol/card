@@ -55,6 +55,8 @@ class LotteCard:
         time.sleep(2)
 
     def benefit(self):
+        summary = self.__class__.__name__+"\n"
+
         self.mydata=list()
         try:
             self.close_alert()
@@ -62,6 +64,9 @@ class LotteCard:
             pass
         self.driver.get(self.benefit_url)
         time.sleep(1)
+
+
+
         ss =  Screenshot_Clipping.Screenshot()
   
         try:
@@ -74,12 +79,14 @@ class LotteCard:
 
         time.sleep(1)
 
+        title =  self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[1]/div[1]/div[2]/div/span').get_attribute("innerHTML")
+        total = self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[4]/div/div/div[1]/div/div/div[2]/div/div[2]/div[1]/div/div/span').get_attribute("innerHTML")
 
         element = self.driver.find_element(By.XPATH,'//main[@id="sub_container"]')
         img_url = ss.get_element(self.driver, element, r'.')
         self.mydata.append(img_url)
-
-        return self.mydata
+        summary+=f"{title}:{total}\n"
+        return self.mydata, summary
 
     def clear(self):
         for file in self.mydata:

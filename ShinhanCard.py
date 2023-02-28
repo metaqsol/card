@@ -72,6 +72,14 @@ class ShinhanCard:
             logging.info(e)
             pass
 
+        summary = self.__class__.__name__+"\n"
+        title=""
+        total=""
+
+
+
+
+
 
         ss =  Screenshot_Clipping.Screenshot()
         self.driver.implicitly_wait(TIME_WAIT)
@@ -96,6 +104,9 @@ class ShinhanCard:
             self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
             time.sleep(1)
 
+            title =  self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[3]/div/span/button/span').get_attribute("innerHTML")
+            total = self.driver.find_element(By.XPATH,'//*[@id="fm_cmt_uea0"]').text
+            summary+=f"{title}:{total}\n"
             try:
                 next_button:WebElement = self.driver.find_element(By.XPATH," //div[@class='card_swiper gap55_35']//button[@class='nav-button-next']")
 
@@ -103,7 +114,10 @@ class ShinhanCard:
             except:
                 break
             time.sleep(3)
-        return self.mydata           
+
+
+
+        return self.mydata, summary   
 
 
     def clear(self):
@@ -165,13 +179,11 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    # driver = webdriver.Chrome(service=s,options=getChromeOption())
     driver = getMyWebDriver("CHROME",isHeadless=False)
-
-
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)
     card = MyClass(driver,str(myconf[myname]["ID"]).strip(),str(myconf[myname]["PW"]).strip())
     card.login()
     print(card.benefit())
+

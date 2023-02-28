@@ -12,7 +12,11 @@ ID=ID
 PW=PW
 
 
-[Slack]
+[Slack_Msg]
 TOKEN=TOKEN
 CHANNEL=CHANNEL
+
+[Kakao_Msg]
+
+
 

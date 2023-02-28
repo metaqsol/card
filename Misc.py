@@ -182,9 +182,18 @@ def config_init():
 
 
 
-def send_slack(slack_token:str, myfile:str, channel:str, title:str, extension:str):
+def send_slack_file(slack_token:str, myfile:str, channel:str, title:str, extension:str):
     client = WebClient(token=slack_token)
     client.files_upload(channels=channel,
                                             file=myfile,
                                             title=title,
                                             filetype=extension)
+
+def send_slack_text(slack_token:str, channel:str, text:str):
+    client = WebClient(token=slack_token)
+    client.chat_postMessage(channel=channel,
+                                            text=text,
+                                       )
+    
+def send_kakao():
+    pass

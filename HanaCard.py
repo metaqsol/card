@@ -26,7 +26,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from Screenshot import Screenshot_Clipping
 from PIL import Image
 import os
-from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana
+from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana,getMyWebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -61,11 +61,18 @@ class HanaCard:
 
     def benefit(self):
         self.driver.get(self.benefit_url)
+        summary = self.__class__.__name__+"\n"
+
+        title = self.driver.find_element(By.XPATH,'//*[@id="frm"]/div[1]/div[1]/div[2]/button').text
+        total = self.driver.find_element(By.XPATH,'//*[@id="frm"]/div[1]/div[2]/div/div[2]/dl/dd/span').text
+        
         self.mydata=list()
         ss =  Screenshot_Clipping.Screenshot()
         self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
         time.sleep(1)
-        return self.mydata
+
+        summary+=f"{title}:{total}\n"
+        return self.mydata,summary
 
     def clear(self):
         for file in self.mydata:
@@ -105,11 +112,11 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    s = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=s,options=getChromeOption())
+    driver = getMyWebDriver("EDGE",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)
     card = MyClass(driver,str(myconf[myname]["ID"]).strip(),str(myconf[myname]["PW"]).strip())
     card.login()
     print(card.benefit())
+    
