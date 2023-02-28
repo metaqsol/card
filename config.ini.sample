@@ -17,6 +17,8 @@ TOKEN=TOKEN
 CHANNEL=CHANNEL
 
 [Kakao_Msg]
+KEY=
+TOKEN=
 
 
 

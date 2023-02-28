@@ -6,4 +6,4 @@ windows-curses==2.3.0
 Selenium-Screenshot==1.7.0
 packaging
 slack_sdk
- 
+Pykakao

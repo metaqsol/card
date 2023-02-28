@@ -195,5 +195,30 @@ def send_slack_text(slack_token:str, channel:str, text:str):
                                             text=text,
                                        )
     
-def send_kakao():
-    pass
+from PyKakao import Message
+def send_kakao(key:str,token:str,mytext:str):
+    api = Message(service_key = key )
+    # auth_url = api.get_url_for_generating_code()
+    # print(auth_url)
+
+    # url = ''
+    # mytoken = api.get_access_token_by_redirected_url(url)
+    # print(mytoken)
+    api.set_access_token(token)
+    link = {
+                "web_url": "https://developers.kakao.com",
+                "mobile_web_url": "https://developers.kakao.com"
+            }
+    button_title = "바로 확인"
+    api.send_text(text=mytext, link={}, button_title=button_title)
+
+
+
+
+if __name__ == '__main__':
+    myconf = config_init()
+    send_kakao(myconf['Kakao_Msg']['KEY'].strip(),myconf['Kakao_Msg']['TOKEN'].strip(),'TESTMESSAGE')
+
+
+
+    
