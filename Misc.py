@@ -28,7 +28,10 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-
+from PyKakao import Message
+import time
+import requests
+import json
 
 
 def getVKCode(letter):
@@ -195,16 +198,76 @@ def send_slack_text(slack_token:str, channel:str, text:str):
                                             text=text,
                                        )
     
-from PyKakao import Message
-def send_kakao(key:str,token:str,mytext:str):
-    api = Message(service_key = key )
-    # auth_url = api.get_url_for_generating_code()
-    # print(auth_url)
 
-    # url = ''
-    # mytoken = api.get_access_token_by_redirected_url(url)
-    # print(mytoken)
-    api.set_access_token(token)
+def get_token(key:str):
+    REDIRECTURL = 'https://localhost:5000'
+    api = Message(service_key = key )
+    auth_url = api.get_url_for_generating_code()
+    driver = getMyWebDriver("CHROME",isHeadless=False)
+    driver.set_window_position(0,0)
+    driver.set_window_size(820,1180)
+    driver.get(api.get_url_for_generating_code())
+    myurl = ""
+    while True:
+        myurl =  driver.current_url
+        if(myurl.startswith(REDIRECTURL)):
+           break
+        time.sleep(3)
+    
+    mycode=myurl.split('code=')[1]
+    print(mycode)
+
+    url = 'https://kauth.kakao.com/oauth/token'
+    
+    data = {
+            'grant_type':'authorization_code',
+            'client_id':f'{key}',
+            'redirect_uri':f'{REDIRECTURL}',
+            'code': f'{mycode}',
+        }
+
+    response = requests.post(url, data=data)
+    tokens = response.json()
+    print(tokens)
+    TOKENFILE =  os.path.join(Path(__file__).parent, "kakao_token.json") 
+    print(TOKENFILE)
+    with open(TOKENFILE, "w") as fp:
+        json.dump(tokens, fp)
+
+
+def kakao_token():
+    myconf = config_init()
+
+    TOKENFILE =  os.path.join(Path(__file__).parent, "kakao_token.json") 
+    print(TOKENFILE)
+
+    with open(TOKENFILE, "r") as st_json:
+        mydata = json.load(st_json)
+
+
+    url = "https://kauth.kakao.com/oauth/token"
+    data = {
+        "grant_type": "refresh_token",
+        "client_id": f"{myconf['Kakao_Msg']['KEY']}",
+        "refresh_token": f"{mydata['refresh_token']}"
+    }
+    response = requests.post(url, data=data)
+    tokens = response.json()
+    print(tokens)
+    # kakao_code.json 파일 저장
+    if 'refresh_token' not in tokens:
+        tokens['refresh_token']=mydata['refresh_token']
+    
+    
+    with open(TOKENFILE, "w") as fp:
+        json.dump(tokens, fp)
+    
+    return tokens['access_token']
+
+
+def send_kakao(key:str,mytext:str):
+    api = Message(service_key = key )
+    api.set_access_token(kakao_token())
     link = {
                 "web_url": "https://developers.kakao.com",
                 "mobile_web_url": "https://developers.kakao.com"
@@ -217,8 +280,8 @@ def send_kakao(key:str,token:str,mytext:str):
 
 if __name__ == '__main__':
     myconf = config_init()
-    send_kakao(myconf['Kakao_Msg']['KEY'].strip(),myconf['Kakao_Msg']['TOKEN'].strip(),'TESTMESSAGE')
-
+    send_kakao(myconf['Kakao_Msg']['KEY'].strip(),'TESTMESSAGE')
+    # get_token(myconf['Kakao_Msg']['KEY'].strip())
 
 
     

@@ -85,5 +85,4 @@ for mymsg in myconf:
             , channel = myconf['Slack_Msg']['CHANNEL']
             , text=my_text)
         if(mymsg.startswith('Kakao')):
-            send_kakao(myconf['Kakao_Msg']['KEY'].strip(),myconf['Kakao_Msg']['TOKEN'].strip(),
-                       my_text)
+            send_kakao(myconf['Kakao_Msg']['KEY'].strip(),my_text)
