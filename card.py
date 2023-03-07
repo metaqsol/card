@@ -61,22 +61,25 @@ for myname in myconf:
     if(myname.endswith("Card")):
         my_module = importlib.import_module(myname)
         MyClass = getattr(my_module, myname)
-        card = MyClass(driver,str(myconf[myname]["ID"]).strip(),str(myconf[myname]["PW"]).strip())
-        card.login()
-        mydata, my_summary = card.benefit()
-        my_text+=my_summary+'\n'
-        for mybenefit in mydata:
-            for mymsg in myconf:
-                if(mymsg.endswith('Msg')):
-                    if(mymsg.startswith('Slack')):                    
-                        send_slack_file(slack_token=str(myconf['Slack_Msg']['TOKEN']).strip()
-                        , myfile = mybenefit
-                        , channel = myconf['Slack_Msg']['CHANNEL']
-                        , title=myname
-                        ,extension='png')
+        try:
+            card = MyClass(driver,str(myconf[myname]["ID"]).strip(),str(myconf[myname]["PW"]).strip())
+            card.login()
+            mydata, my_summary = card.benefit()
+            my_text+=my_summary+'\n'
+            for mybenefit in mydata:
+                for mymsg in myconf:
+                    if(mymsg.endswith('Msg')):
+                        if(mymsg.startswith('Slack')):                    
+                            send_slack_file(slack_token=str(myconf['Slack_Msg']['TOKEN']).strip()
+                            , myfile = mybenefit
+                            , channel = myconf['Slack_Msg']['CHANNEL']
+                            , title=myname
+                            ,extension='png')
+            card.clear()
 
+        except:
+            pass
 
-        card.clear()
 
 for mymsg in myconf:
     if(mymsg.endswith('Msg')):
