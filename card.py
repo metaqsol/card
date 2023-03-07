@@ -48,7 +48,7 @@ import HanaCard
 logging.basicConfig(level=logging.INFO)
 
 
-driver = getMyWebDriver("EDGE")
+driver = getMyWebDriver("CHROME")
 
 
 time.sleep(3)

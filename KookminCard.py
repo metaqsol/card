@@ -132,7 +132,7 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    driver = getMyWebDriver("EDGE",isHeadless=False)
+    driver = getMyWebDriver("CHROME",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)
