@@ -146,15 +146,15 @@ class ShinhanCard:
   
         self.close_alert()
         time.sleep(3)
-        self.driver.find_element(By.XPATH,"//button[text() = '다른 방식으로 로그인']").click()
+        self.driver.find_element(By.XPATH,"//button[text() = '다른 로그인 방식 선택']").click()
         self.driver.implicitly_wait(TIME_WAIT)
         time.sleep(2)
-        self.driver.find_element(By.XPATH,"//a[text() = '아이디']").click()
+        self.driver.find_element(By.XPATH,'//*[@id="popLogin"]/article/div[2]/ul/li[2]/button').click()
         self.driver.implicitly_wait(TIME_WAIT)
         self.driver.find_element(By.XPATH,"//input[@id='t01.memid']").send_keys(self.username)
         self.driver.find_element(By.XPATH,"//button[@id='nextBtn']").click() 
         time.sleep(3)
-        self.driver.find_element(By.XPATH,"//div[@class='input_wrap interaction']").click()
+        self.driver.find_element(By.XPATH,'//*[@id="step02"]/div[2]/div').click()
         time.sleep(3)
 
         for l in self.password:
