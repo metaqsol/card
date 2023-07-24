@@ -69,9 +69,16 @@ class KookminCard:
                 pass
             time.sleep(5)
 
-           
-            title = self.driver.find_element(By.XPATH,'//*[@id="choiceCardName"]').get_attribute('value')
-            total = self.driver.find_element(By.XPATH,'//*[@id="content"]/section/div/div[3]/div[3]/div/a/strong').text
+            try:
+                title = self.driver.find_element(By.XPATH,'//*[@id="choiceCardName"]').get_attribute('value')
+            except:
+                title=""
+            
+            try:
+                total = self.driver.find_element(By.XPATH,'//*[@id="content"]/section/div/div[3]/div[3]/div/a/strong').text
+            except:
+                total=0
+
             ss =  Screenshot_Clipping.Screenshot()
             self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
             time.sleep(5)
