@@ -83,13 +83,13 @@ for myname in myconf:
 
 for mymsg in myconf:
     if(mymsg.endswith('Msg')):
-        try:
-            if(mymsg.startswith('Slack')):   
-                send_slack_text(slack_token=str(myconf['Slack_Msg']['TOKEN']).strip()
-                , channel = myconf['Slack_Msg']['CHANNEL']
-                , text=my_text)
-        except Exception as e:
-            print(e)
+        # try:
+        #     if(mymsg.startswith('Slack')):   
+        #         send_slack_text(slack_token=str(myconf['Slack_Msg']['TOKEN']).strip()
+        #         , channel = myconf['Slack_Msg']['CHANNEL']
+        #         , text=my_text)
+        # except Exception as e:
+        #     print(e)
         
         try:
             if(mymsg.startswith('Kakao')):
