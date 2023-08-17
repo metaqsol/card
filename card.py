@@ -83,6 +83,8 @@ for myname in myconf:
 
 for mymsg in myconf:
     if(mymsg.endswith('Msg')):
+        print("Text")
+        print(my_text)
         # try:
         #     if(mymsg.startswith('Slack')):   
         #         send_slack_text(slack_token=str(myconf['Slack_Msg']['TOKEN']).strip()
