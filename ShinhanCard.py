@@ -59,14 +59,57 @@ class ShinhanCard:
             logging.info(e)
             pass
 
+
     def benefit(self):
+        self.mydata=list()
+        self.close_alert()
+        self.driver.get(self.benefit_url)
+
+
+        summary = self.__class__.__name__+"\n"
+        title=""
+        total=""
+
+        ss =  Screenshot_Clipping.Screenshot()
+        self.driver.implicitly_wait(TIME_WAIT)
+
+        elements_cnt = len(self.driver.find_elements(By.XPATH,'//*[@class="list4-item"]'))
+        for i in range(elements_cnt):
+            self.driver.get(self.benefit_url)
+            ele = self.driver.find_elements(By.XPATH,'//*[@class="list4-item"]')[i]
+            ele.click()
+            time.sleep(5)
+
+            self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
+            time.sleep(1)
+            self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
+            time.sleep(1)
+            self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
+            time.sleep(1)
+
+
+            title =   self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[1]/div/div[2]/strong').get_attribute("innerHTML")
+            total = self.driver.find_element(By.XPATH,'//*[@id="cmtAmount0"]').text
+            summary+=f"{title}:{total}\n"
+            time.sleep(3)
+
+
+            # print(element.text)
+            # elements = element.find_element(By.XPATH,'/a/div[2]/div[1]')
+
+
+        print("DONE")
+        return self.mydata, summary  
+
+
+    def benefit2(self):
         self.mydata=list()
         self.close_alert()
         self.driver.get(self.benefit_url)
 
         try:
             elem = self.driver.find_element(By.XPATH, '//header[@id="header"]')
-            # driver.execute_script("arguments[0].setAttribute('value',arguments[1])",elem, 'none')
+            # driver.execute_script("arguments[0].setAttribute('value',arguments[1])",elem, 'none')web
             self.driver.execute_script("arguments[0].style.display = 'none';",elem)
         except Exception as e:
             logging.info(e)
