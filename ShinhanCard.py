@@ -44,6 +44,7 @@ TIME_WAIT=5
 class ShinhanCard:
     login_url:str =  "https://www.shinhancard.com/mob/MOBFM001N/MOBFM001C01.shc"
     benefit_url:str = "https://www.shinhancard.com/mob/MOBFM031N/MOBFM031R01.shc"
+    payment_url:str = "https://www.shinhancard.com/mob/MOBFM043N/MOBFM043R01.shc"
     driver:webdriver  = None
     mydata:list = None
 
@@ -96,70 +97,21 @@ class ShinhanCard:
 
             # print(element.text)
             # elements = element.find_element(By.XPATH,'/a/div[2]/div[1]')
-
+        summary+=self.expectedPayment()
+        
         return self.mydata, summary  
 
+    def expectedPayment(self):
+        self.driver.get(self.payment_url)
+        time.sleep(1)
+        # try:
+        #     self.driver.find_element(By.XPATH,'//*[@id="checkNoti20"]').click()
+        # except:
+        #     pass
 
-    def benefit2(self):
-        self.mydata=list()
-        self.close_alert()
-        self.driver.get(self.benefit_url)
+        payment =  self.driver.find_element(By.XPATH,'//*[@id="viewDiv"]/div[3]/div[1]/div/div[12]/dl/dd/span')
 
-        try:
-            elem = self.driver.find_element(By.XPATH, '//header[@id="header"]')
-            # driver.execute_script("arguments[0].setAttribute('value',arguments[1])",elem, 'none')web
-            self.driver.execute_script("arguments[0].style.display = 'none';",elem)
-        except Exception as e:
-            logging.info(e)
-            pass
-
-        summary = self.__class__.__name__+"\n"
-        title=""
-        total=""
-
-
-
-
-
-
-        ss =  Screenshot_Clipping.Screenshot()
-        self.driver.implicitly_wait(TIME_WAIT)
-        elememts = self.driver.find_elements(By.XPATH,"//span[@class='chk_icon_wrap']")
-        time.sleep(2)
-        for ele in elememts:
-            ele.click()
-            time.sleep(2)
-            for e in self.driver.find_elements(By.XPATH,"//div[@class='myinfo_card_wrap']//button[@class='acc_btn toggle_btn medium']"):
-                e.click()
-                time.sleep(1)
-
-            for e in self.driver.find_elements(By.XPATH,"//div[@class='myinfo_card_wrap']//dd[@class='accordion_body']"):
-                self.driver.execute_script("arguments[0].style.display = 'block';",e)
-                time.sleep(1)
-
-
-            self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
-            time.sleep(1)
-            self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
-            time.sleep(1)
-            self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
-            time.sleep(1)
-
-            title =  self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[3]/div/span/button/span').get_attribute("innerHTML")
-            total = self.driver.find_element(By.XPATH,'//*[@id="fm_cmt_uea0"]').text
-            summary+=f"{title}:{total}\n"
-            try:
-                next_button:WebElement = self.driver.find_element(By.XPATH," //div[@class='card_swiper gap55_35']//button[@class='nav-button-next']")
-
-                next_button.click()
-            except:
-                break
-            time.sleep(3)
-
-
-
-        return self.mydata, summary   
-
+        return f"예정금액\n{payment.text}'
 
     def clear(self):
         for file in self.mydata:
