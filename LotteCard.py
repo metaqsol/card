@@ -94,7 +94,7 @@ class LotteCard:
         img_url = ss.get_element(self.driver, element, r'.')
         self.mydata.append(img_url)
         summary+=f"{title}:{total}\n"
-        summary+=self.expectedPayment()
+        summary+=f'{self.expectedPayment()}\n'
         return self.mydata, summary
 
 

@@ -89,7 +89,7 @@ class KookminCard:
             # print(title, total)
             summary+=f"{title}:{total}\n"
 
-        summary+=self.expectedPayment()
+        summary+=f'{self.expectedPayment()}\n'
 
         return self.mydata,summary
     

@@ -97,7 +97,7 @@ class ShinhanCard:
 
             # print(element.text)
             # elements = element.find_element(By.XPATH,'/a/div[2]/div[1]')
-        summary+=self.expectedPayment()
+        summary+=f'{self.expectedPayment()}\n'
         
         return self.mydata, summary  
 
