@@ -44,6 +44,7 @@ TIME_WAIT=5
 class HanaCard:
     login_url:str =  "https://m.hanacard.co.kr/MKLGN2001M.web"
     benefit_url:str = "https://m.hanacard.co.kr/MKBENF3010M.web?CD_IDX=1&_frame=noX"
+    payment_url:str = "https://m.hanacard.co.kr/MKPAMT1010M.web?_frame=noX"
     driver:webdriver  = None
     mydata:list = None
 
@@ -72,8 +73,24 @@ class HanaCard:
         time.sleep(1)
 
         summary+=f"{title}:{total}\n"
+
+
+        summary+=self.expectedPayment()
+
         return self.mydata,summary
 
+    def expectedPayment(self):
+        self.driver.get(self.payment_url)
+        time.sleep(1)
+        # try:
+        #     self.driver.find_element(By.XPATH,'//*[@id="checkNoti20"]').click()
+        # except:
+        #     pass
+
+        payment =  self.driver.find_element(By.XPATH,'//*[@id="frm"]/div[4]/div[2]/div/div[1]/div/div[2]')
+
+        return f"예정금액\n{payment.text}"
+    
     def clear(self):
         for file in self.mydata:
             try:

@@ -111,7 +111,7 @@ class ShinhanCard:
 
         payment =  self.driver.find_element(By.XPATH,'//*[@id="viewDiv"]/div[3]/div[1]/div/div[12]/dl/dd/span')
 
-        return f"예정금액\n{payment.text}'
+        return f"예정금액\n{payment.text}"
 
     def clear(self):
         for file in self.mydata:

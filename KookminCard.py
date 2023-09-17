@@ -40,6 +40,7 @@ import uuid
 class KookminCard:
     login_url:str =  "https://m.kbcard.com/CMN/DVIEW/MOBMCXHIAMBC0001#loginType1"
     benefit_url:str = "https://m.kbcard.com/MKB/DVIEW/MMBMCXHIABNSD0006"
+    payment_url:str = "https://m.kbcard.com/MKB/DVIEW/MMBMCXHIAMKC0016"
     driver:webdriver  = None
     mydata:list = None
     TIME_WAIT=5
@@ -87,9 +88,22 @@ class KookminCard:
   
             # print(title, total)
             summary+=f"{title}:{total}\n"
+
+        summary+=self.expectedPayment()
+
         return self.mydata,summary
     
+    def expectedPayment(self):
+        self.driver.get(self.payment_url)
+        time.sleep(1)
+        # try:
+        #     self.driver.find_element(By.XPATH,'//*[@id="checkNoti20"]').click()
+        # except:
+        #     pass
 
+        payment =  self.driver.find_element(By.XPATH,'//*[@id="dlZnList"]/dl[1]/dd/em')
+
+        return f"예정금액\n{payment.text}"
 
 
     def clear(self):
