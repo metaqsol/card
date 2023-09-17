@@ -39,6 +39,7 @@ import importlib
 class LotteCard:
     login_url:str =  "https://m.lottecard.co.kr/app/LPMBRAB_V100.lc"
     benefit_url:str = "https://m.lottecard.co.kr/spa/card-manager"
+    payment_url:str = "https://m.lottecard.co.kr/app/LPMAIAB_V100.lc"
     driver:webdriver  = None
     mydata:list = None
     TIME_WAIT=5
@@ -54,6 +55,13 @@ class LotteCard:
         alert.dismiss()
         time.sleep(2)
 
+    def expectedPayment(self):
+        self.driver.get(self.payment_url)
+        time.sleep(1)
+        payment =  self.driver.find_element(By.XPATH,'//div[@class="text-price"]')
+
+        return payment.text
+    
     def benefit(self):
         summary = self.__class__.__name__+"\n"
 
@@ -86,7 +94,12 @@ class LotteCard:
         img_url = ss.get_element(self.driver, element, r'.')
         self.mydata.append(img_url)
         summary+=f"{title}:{total}\n"
+        summary+=self.expectedPayment()
         return self.mydata, summary
+
+
+
+
 
     def clear(self):
         for file in self.mydata:
@@ -129,3 +142,4 @@ if __name__ == '__main__':
     card = MyClass(driver,str(myconf[myname]["ID"]).strip(),str(myconf[myname]["PW"]).strip())
     card.login()
     print(card.benefit())
+
