@@ -85,9 +85,8 @@ class LotteCard:
             logging.info(e)
             pass
 
-        time.sleep(1)
-
-        title =  self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[1]/div[1]/div[2]/div/span').get_attribute("innerHTML")
+        time.sleep(5)
+        title =  self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[1]/div[1]/div[2]/span').get_attribute("innerHTML")
         total = self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[4]/div/div/div[1]/div/div/div[2]/div/div[2]/div[1]/div/div/span').get_attribute("innerHTML")
 
         element = self.driver.find_element(By.XPATH,'//main[@id="sub_container"]')
