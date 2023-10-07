@@ -6,7 +6,6 @@ cachetools==5.3.1
 certifi==2023.7.22
 cffi==1.15.1
 charset-normalizer==3.2.0
-colorama @ file:///C:/b/abs_a9ozq0l032/croot/colorama_1672387194846/work
 exceptiongroup==1.1.2
 google-auth==2.22.0
 google-auth-oauthlib==1.0.0
@@ -45,7 +44,6 @@ sortedcontainers==2.4.0
 soupsieve==2.4.1
 tensorboard==2.13.0
 tensorboard-data-server==0.7.1
-tqdm @ file:///C:/b/abs_f76j9hg7pv/croot/tqdm_1679561871187/work
 trio==0.22.2
 trio-websocket==0.10.3
 tzdata==2023.3
