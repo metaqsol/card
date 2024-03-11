@@ -273,7 +273,7 @@ def send_kakao(key:str,mytext:str):
                 "mobile_web_url": "https://developers.kakao.com"
             }
     button_title = "바로 확인"
-    api.send_text(text=mytext, link={}, button_title=button_title)
+    api.send_message_to_me(message_type="text",text=mytext, link={}, button_title=button_title)
 
 
 

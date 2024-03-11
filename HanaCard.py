@@ -17,13 +17,12 @@
 
 from curses.ascii import isalpha
 from gc import isenabled
-from turtle import isvisible
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from Screenshot import Screenshot_Clipping
+from Screenshot import Screenshot
 from PIL import Image
 import os
 from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana,getMyWebDriver
@@ -68,8 +67,8 @@ class HanaCard:
         total = self.driver.find_element(By.XPATH,'//*[@id="frm"]/div[1]/div[2]/div/div[2]/dl/dd/span').text
         
         self.mydata=list()
-        ss =  Screenshot_Clipping.Screenshot()
-        self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
+        ss =  Screenshot.Screenshot()
+        self.mydata.append(ss.full_screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
         time.sleep(1)
 
         summary+=f"{title}:{total}\n"

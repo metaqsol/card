@@ -17,13 +17,12 @@
 
 from curses.ascii import isalpha
 from gc import isenabled
-from turtle import isvisible
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from Screenshot import Screenshot_Clipping
+from Screenshot import Screenshot
 from PIL import Image
 import os
 from Misc import getVKCode,getChromeOption,config_init,getMyWebDriver
@@ -71,7 +70,7 @@ class ShinhanCard:
         title=""
         total=""
 
-        ss =  Screenshot_Clipping.Screenshot()
+        ss =  Screenshot.Screenshot()
         self.driver.implicitly_wait(TIME_WAIT)
 
         elements_cnt = len(self.driver.find_elements(By.XPATH,'//*[@class="list4-item"]'))
@@ -83,7 +82,7 @@ class ShinhanCard:
 
             self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
             time.sleep(1)
-            self.mydata.append(ss.full_Screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
+            self.mydata.append(ss.full_screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
             time.sleep(1)
             self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
             time.sleep(1)

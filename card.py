@@ -16,9 +16,9 @@
  """
 
 # -*- encoding:utf8 -*-
-from curses.ascii import isdigit
+#from curses.ascii import isdigit
 from select import select
-from turtle import Screen, isvisible
+#from turtle import Screen, isvisible
 from configparser import ConfigParser
 from bs4 import BeautifulSoup
 import time

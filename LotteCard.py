@@ -21,7 +21,7 @@ from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from Screenshot import Screenshot_Clipping
+from Screenshot import Screenshot
 from PIL import Image
 import os
 from Misc import getVKCode,getChromeOption,config_init,getVKCode_Hana,getMyWebDriver
@@ -75,7 +75,7 @@ class LotteCard:
 
 
 
-        ss =  Screenshot_Clipping.Screenshot()
+        ss =  Screenshot.Screenshot()
   
         try:
             elem = self.driver.find_element(By.XPATH, '//header')
