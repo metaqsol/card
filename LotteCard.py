@@ -87,7 +87,7 @@ class LotteCard:
 
         time.sleep(5)
         title =  self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[1]/div[1]/div[2]/span').get_attribute("innerHTML")
-        total = self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[4]/div/div/div[1]/div/div/div[2]/div/div[2]/div[1]/div/div/span').get_attribute("innerHTML")
+        total = self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[3]/div/div/div[1]/div/div/div[2]/div/div[2]/div[1]/div/div/span').get_attribute("innerHTML")
 
         element = self.driver.find_element(By.XPATH,'//main[@id="sub_container"]')
         img_url = ss.get_element(self.driver, element, r'.')
@@ -95,7 +95,6 @@ class LotteCard:
         summary+=f"{title}:{total}\n"
         summary+=f'{self.expectedPayment()}\n'
         return self.mydata, summary
-
 
 
 
