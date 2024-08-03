@@ -80,6 +80,7 @@ for myname in myconf:
         except:
             pass
 
+driver.quit()
 
 for mymsg in myconf:
     if(mymsg.endswith('Msg')):
