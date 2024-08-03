@@ -89,8 +89,20 @@ class ShinhanCard:
 
 
             title =   self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[1]/div/div[2]/strong').get_attribute("innerHTML")
+            target =   self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[2]/p/strong').get_attribute("innerHTML")
+ 
+#/html/body/div[3]/div[1]/section/div/div[3]/div[1]/div/div[2]/strong
+
+#/html/body/div[3]/div[1]/section/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[1]/div[1]/div[1]
+#/html/body/div[3]/div[1]/section
+#/html/body/div[3]/div[1]/section/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[1]/div[1]/div[1]
+#/html/body/div[3]/div[1]/section/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[2]/p/strong
+#/html/body/div[3]/div[1]/section/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[2]/p/strong
+#/html/body/div[3]/div[1]/section/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[2]/p/strong
             total = self.driver.find_element(By.XPATH,'//*[@id="cmtAmount0"]').text
             summary+=f"{title}:{total}\n"
+            summary+=f"남은금액:{target}\n"
+
             time.sleep(3)
 
 
@@ -108,9 +120,10 @@ class ShinhanCard:
         # except:
         #     pass
 
-        payment =  self.driver.find_element(By.XPATH,'//*[@id="viewDiv"]/div[3]/div[1]/div/div[12]/dl/dd/span')
+#/html/body/div[3]/div/section/div[1]/div/div[4]/div/div/div[2]/a/span
 
-        return f"예정금액\n{payment.text}"
+        payment =  self.driver.find_element(By.XPATH,'//*[@id="pay_amt"]/a/span').text
+        return f"예정금액\n{payment}"
 
     def clear(self):
         for file in self.mydata:
@@ -171,7 +184,7 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    driver = getMyWebDriver("CHROME",isHeadless=False)
+    driver = getMyWebDriver("EDGE",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)
