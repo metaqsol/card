@@ -88,11 +88,12 @@ class LotteCard:
         time.sleep(5)
         title =  self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[1]/div[1]/div[2]/span').get_attribute("innerHTML")
         total = self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[3]/div/div/div[1]/div/div/div[2]/div/div[2]/div[1]/div/div/span').get_attribute("innerHTML")
-
+        target = self.driver.find_element(By.XPATH,'//*[@id="sub_container"]/div[3]/div/div/div[1]/div/div/div[2]/div/div[1]/div[2]/span').get_attribute("innerHTML")
         element = self.driver.find_element(By.XPATH,'//main[@id="sub_container"]')
         img_url = ss.get_element(self.driver, element, r'.')
         self.mydata.append(img_url)
         summary+=f"{title}:{total}\n"
+        summary+=f"남은금액:{target}\n"
         summary+=f'{self.expectedPayment()}\n'
         return self.mydata, summary
 
@@ -133,11 +134,12 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    driver = getMyWebDriver("CHROME",isHeadless=False)
+    driver = getMyWebDriver("EDGE",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)
     card = MyClass(driver,str(myconf[myname]["ID"]).strip(),str(myconf[myname]["PW"]).strip())
     card.login()
     print(card.benefit())
+    time.sleep(20)
 
