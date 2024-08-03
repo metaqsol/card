@@ -80,6 +80,14 @@ class KookminCard:
             except:
                 total=0
 
+
+            try:
+                target = self.driver.find_element(By.XPATH,'//*[@id="content"]/section/div/div[3]/div[5]/p[2]/strong/span').text
+            except:
+                target=0
+
+           
+
             ss =  Screenshot.Screenshot()
             self.mydata.append(ss.full_screenshot(self.driver, save_path=r'.', image_name=str(uuid.uuid4())+".png"))
             time.sleep(5)
@@ -88,6 +96,7 @@ class KookminCard:
   
             # print(title, total)
             summary+=f"{title}:{total}\n"
+            summary+=f"남은금액:{target}\n"
 
         summary+=f'{self.expectedPayment()}\n'
 
@@ -153,7 +162,7 @@ if __name__ == '__main__':
     myname = Path(__file__).stem
     my_module = importlib.import_module(myname)
     MyClass = getattr(my_module, myname)
-    driver = getMyWebDriver("CHROME",isHeadless=False)
+    driver = getMyWebDriver("EDGE",isHeadless=False)
     driver.set_window_position(0,0)
     driver.set_window_size(820,1180)
     time.sleep(3)
