@@ -37,6 +37,7 @@ import logging
 import uuid
 from pathlib import Path
 import importlib
+import re
 
 TIME_WAIT=5
 
@@ -91,6 +92,10 @@ class ShinhanCard:
             title =   self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[1]/div/div[2]/strong').get_attribute("innerHTML")
             target =   self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[2]/p/strong').get_attribute("innerHTML")
  
+            pattern = r'\d{1,3}(,\d{3})*(원|$)'
+            target = re.search(pattern, target).group()
+
+
 #/html/body/div[3]/div[1]/section/div/div[3]/div[1]/div/div[2]/strong
 
 #/html/body/div[3]/div[1]/section/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[1]/div[1]/div[1]
