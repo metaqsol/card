@@ -60,29 +60,51 @@ class KookminCard:
         self.driver.get(self.benefit_url)
         self.mydata=list()
 
-        elememts = self.driver.find_elements(By.XPATH,"//*[@id='slideCardList']/div/span[contains(@class,'swiper-pagination-bullet')]")
+        #elememts = self.driver.find_elements(By.XPATH,"//*[@id='slideCardList']/div/span[contains(@class,'swiper-pagination-bullet')]")
+        time.sleep(5)
+        self.driver.find_element(By.XPATH,"/html/body/div[2]/div[3]/div/section/div/div[2]/a[2]").click()
+        time.sleep(5)
+
+
+        elememts = self.driver.find_elements(By.XPATH,"/html/body/div[2]/div[5]/div[2]/div/a")
+        print(f"cards: {len(elememts)}")
         time.sleep(2)
+
         summary = self.__class__.__name__+"\n"
+        saved_cards=[]
         for ele in elememts:
+            saved_cards.append(ele.get_attribute("onclick"))
+
+        for ele in saved_cards:
             try:
-                ele.click()
+                self.driver.find_element(By.XPATH,"/html/body/div[2]/div[3]/div/section/div/div[2]/a[2]").click()
             except:
+                pass
+            time.sleep(5)
+            try:
+                self.driver.execute_script(ele)
+
+#                driver.execute_script("arguments[0].click();", ele)
+#                ele.click()
+            except Exception as e:
+                print(e)
+
                 pass
             time.sleep(5)
 
             try:
-                title = self.driver.find_element(By.XPATH,'//*[@id="choiceCardName"]').get_attribute('value')
+                title =  self.driver.find_element(By.XPATH,' /html/body/div[2]/div[3]/div[1]/section/div/div[2]/a[1]/div[2]/p').text
             except:
                 title=""
             
             try:
-                total = self.driver.find_element(By.XPATH,'//*[@id="content"]/section/div/div[3]/div[3]/div/a/strong').text
+                total = self.driver.find_element(By.XPATH,'/html/body/div[2]/div[3]/div[1]/section/div/div[3]/div[3]/div/a/strong').text
             except:
                 total=0
 
 
             try:
-                target = self.driver.find_element(By.XPATH,'//*[@id="content"]/section/div/div[3]/div[5]/p[2]/strong/span').text
+                target = self.driver.find_element(By.XPATH,'/html/body/div[2]/div[3]/div[1]/section/div/div[3]/div[5]/p[2]/strong/span').text
             except:
                 target=0
 
@@ -94,10 +116,10 @@ class KookminCard:
             self.driver.find_element(By.TAG_NAME,'html').send_keys(Keys.HOME)
             time.sleep(1)
   
-            # print(title, total)
+            print(title, total)
             summary+=f"{title}:{total}\n"
             summary+=f"남은금액:{target}\n"
-
+            
         summary+=f'{self.expectedPayment()}\n'
 
         return self.mydata,summary
