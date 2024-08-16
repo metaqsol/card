@@ -95,15 +95,13 @@ class ShinhanCard:
  
             pattern = r'\d{1,3}(,\d{3})*(원|\$)'  # 금액 패턴
             try:
-                target = re.search(pattern, target)
-                if target:
-                    target = target.group()
+                if '달성' in target:
+                    target = "완료!"
                 else:
-                    if '달성' in target:
-                        target = "완료!"
-                    else:
-                        target ="확인필요"
-            except:
+                    target = re.search(pattern, target).group()
+                     
+            except Exception as e:
+                print(e)
                 target=0
             
 
