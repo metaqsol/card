@@ -92,9 +92,20 @@ class ShinhanCard:
             title =   self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[1]/div/div[2]/strong').get_attribute("innerHTML")
             target =   self.driver.find_element(By.XPATH,'//*[@id="contents"]/div/div[3]/div[2]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[1]/div[2]/p/strong').get_attribute("innerHTML")
  
-            pattern = r'\d{1,3}(,\d{3})*(원|$)'
-            target = re.search(pattern, target).group()
-
+ 
+            pattern = r'\d{1,3}(,\d{3})*(원|\$)'  # 금액 패턴
+            try:
+                target = re.search(pattern, target)
+                if target:
+                    target = target.group()
+                else:
+                    if '달성' in target:
+                        target = "완료!"
+                    else:
+                        target ="확인필요"
+            except:
+                target=0
+            
 
 #/html/body/div[3]/div[1]/section/div/div[3]/div[1]/div/div[2]/strong
 
