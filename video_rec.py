@@ -43,7 +43,7 @@ def create_s3_client(endpoint_url, access_key, secret_key):
 def capture_stream_continuously(stream_url, output_file, duration=300):  # 5분 = 300초
     ffmpeg.input(stream_url).output(
         output_file, 
-        vcodec='libx265',      # H.265 코덱 사용
+        vcodec='libx264',      # H.264 코덱 사용
         b='133k',              # 비디오 비트레이트를 133kbps로 설정 (1분당 1MB)
         r=10,                  # 프레임 속도를 15fps로 설정
         acodec='aac',          # 오디오 코덱으로 AAC 사용
