@@ -24,8 +24,32 @@ def create_s3_client(endpoint_url, access_key, secret_key):
     )
 
 # 스트림을 받아 로컬 파일로 저장하는 함수 (연속적으로 캡처, 5분 단위)
+# def capture_stream_continuously(stream_url, output_file, duration=300):  # 5분 = 300초
+#     ffmpeg.input(stream_url).output(output_file, t=duration).run()
+
+
+# def capture_stream_continuously(stream_url, output_file, duration=300):  # 5분 = 300초
+#     ffmpeg.input(stream_url).output(
+#         output_file, 
+#         vcodec='libx265',      # H.265 코덱 사용
+#         b='133k',              # 비디오 비트레이트를 133kbps로 설정 (1분당 1MB)
+#         r=15,                  # 프레임 속도를 15fps로 설정
+#         acodec='aac',          # 오디오 코덱으로 AAC 사용
+#         ab='128k'              # 오디오 비트레이트를 128kbps로 설정
+#     ).run()
+
+
+
 def capture_stream_continuously(stream_url, output_file, duration=300):  # 5분 = 300초
-    ffmpeg.input(stream_url).output(output_file, t=duration).run()
+    ffmpeg.input(stream_url).output(
+        output_file, 
+        vcodec='libx265',      # H.265 코덱 사용
+        b='133k',              # 비디오 비트레이트를 133kbps로 설정 (1분당 1MB)
+        r=15,                  # 프레임 속도를 15fps로 설정
+        acodec='aac',          # 오디오 코덱으로 AAC 사용
+        ab='128k',             # 오디오 비트레이트를 128kbps로 설정
+        vf='scale=1280:720'    # 해상도를 1280x720으로 설정 (가로: 1280, 세로: 720)
+    ).run()
 
 # S3에 파일 업로드 함수 (별도 스레드에서 실행)
 def upload_to_s3_and_delete(s3_client, bucket_name, file_path, s3_key):
