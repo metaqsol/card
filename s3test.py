@@ -32,7 +32,7 @@ def list_bucket_contents(s3_client, bucket_name):
         print(f"Error accessing the bucket: {e}")
 
 # JSON 설정 파일 경로
-config_file = 'config.json'
+config_file = 'video_config.json'
 
 # 설정 로드 및 S3 접속 테스트
 config = load_config(config_file)
