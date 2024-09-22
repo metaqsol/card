@@ -43,8 +43,7 @@ def create_s3_client(endpoint_url, access_key, secret_key):
 def capture_stream_continuously(stream_url, output_file, duration=300):  # 5분 = 300초
     ffmpeg.input(stream_url).output(
         output_file, 
-        vcodec='libx264',      # H.264 코덱 사용
-        vf='scale=1280:720',    # 해상도를 1280x720으로 설정 (가로: 1280, 세로: 720)
+        vf='scale=854:480',
         t=duration,
     ).run()
 
