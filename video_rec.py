@@ -15,12 +15,15 @@ def load_config(config_file):
 
 # S3 호환 클라이언트 생성
 def create_s3_client(endpoint_url, access_key, secret_key):
+    isSSl = False if endpoint_url.startswith("http://") else True
+
     return boto3.client(
         's3',
         endpoint_url=endpoint_url,
         aws_access_key_id=access_key,
         aws_secret_access_key=secret_key,
-        config=Config(signature_version='s3v4')
+        config=Config(signature_version='s3v4'),
+        use_ssl=isSSl
     )
 
 # 스트림을 받아 로컬 파일로 저장하는 함수 (연속적으로 캡처, 5분 단위)
